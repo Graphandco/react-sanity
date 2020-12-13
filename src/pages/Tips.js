@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import sanityClient from '../client.js'
 //Components
 import PageContent from '../components/PageContent';
 import NavBar from '../components/tips/NavBar';
@@ -15,11 +16,29 @@ import styled from 'styled-components';
 
 
 const Tips = () => {
-    const [tips, isLoading] = useContext(TipsContext);
+    //const [tips, isLoading, setIsLoading] = useContext(TipsContext);
+    const [projectData, setProjectData] = useState(null)
+
+
+useEffect(() => {
+    sanityClient.fetch(`*[_type == 'tip']{
+        title,
+        code,
+    }`)
+    .then((data) => setProjectData(data))
+    .catch(console.error);
+}, [])
+
     return (
         <motion.div variants={pageAnimation} initial='hidden' animate='show' exit='exit'>
             <PageContent title='Coding Tips'>
                 <TipsWrapper className='tips-wrapper'>
+                    {projectData && 
+                    //console.log(projectData)
+                    projectData.map(tip => (
+                        <h2 key={tip.title}>{tip.title}</h2>
+                    ))
+                }
                     <NavBar />
                     {/* {isLoading
                         ? 'Loading...'

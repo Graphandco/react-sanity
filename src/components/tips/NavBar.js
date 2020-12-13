@@ -24,7 +24,7 @@ tips.map(tip => {
     return (
         <NavBarWrapper className='navbar'>
             {tipsCategories.map((tipCategory) => (
-                <NavBarGroup tipCategory={tipCategory} tips={tips} />
+                <NavBarGroup tipCategory={tipCategory} tips={tips} key={tipCategory} />
             ))}
         </NavBarWrapper>
     )

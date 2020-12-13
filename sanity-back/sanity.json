@@ -1,11 +1,11 @@
 {
   "root": true,
-  "project": {
-    "name": "react-sanity"
-  },
   "api": {
     "projectId": "7i4llgs5",
     "dataset": "production"
+  },
+  "project": {
+    "name": "react-sanity"
   },
   "plugins": [
     "@sanity/base",

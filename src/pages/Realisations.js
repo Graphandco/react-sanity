@@ -1,17 +1,39 @@
-import React, {useContext} from 'react';
+import React, {useState, useEffect} from 'react';
+import sanityClient from '../client.js'
 
 import Portfolio from '../assets/images/realisations/portfolio.jpg';
 import PageContent from '../components/PageContent';
 import CustomButton from '../components/custom/CustomButton';
 
-import { RealisationsContext } from '../components/contexts/RealisationsContext';
+//import { RealisationsContext } from '../components/contexts/RealisationsContext';
+
 
 import {motion} from 'framer-motion';
 import {pageAnimation} from '../components/animation'
 
 
 const Realisations = () => {
-    const [realisations] = useContext(RealisationsContext);
+
+    const [realisations, setRealisations] = useState([])
+
+    useEffect(() => {
+        sanityClient.fetch(`*[_type == 'realisation']{
+            title,
+            description,
+            link,
+            image {
+                asset->{
+                    _id,
+                    url
+                },
+                alt
+            }
+        }`)
+        .then((data) => setRealisations(data))
+        .catch(console.error);
+    }, [])
+
+    //const [realisations] = useContext(RealisationsContext);
     return (
         <motion.div variants={pageAnimation} initial='hidden' animate='show' exit='exit'>
             <PageContent title='Réalisations'>
@@ -30,21 +52,22 @@ const Realisations = () => {
                             </div>
                         </div>
                         {realisations.map((realisation, index) => (
+                            console.log(realisation),
                             <div className='realisation' key={index}>
                                 <div className='image'>
                                     <img
-                                        src={realisation.image}
-                                        alt={realisation.name}
+                                        src={realisation.image.asset.url}
+                                        alt={realisation.title}
                                     />
                                 </div>
                                 <div className='content'>
-                                    <div className='name orange-line'>{realisation.name}</div>
-                                    <div className='desc'>{realisation.desc}</div>
+                                    <div className='name orange-line'>{realisation.title}</div>
+                                    <div className='desc'>{realisation.description}</div>
                                     <div className='link'>
                                         <a
                                             href={realisation.link}
                                             target='blank'
-                                            title={`Aller sur le site ${realisation.name}`}
+                                            title={`Aller sur le site ${realisation.title}`}
                                         >
                                     <CustomButton title='Voir'  />
                                         </a>

@@ -1,6 +1,6 @@
 export default {
     name: 'tip',
-    tip: 'Tip',
+    title: 'Tip',
     type: 'document',
     fields: [
         {

@@ -17,7 +17,7 @@ import styled from 'styled-components';
 
 const Tips = () => {
     //const [tips, isLoading, setIsLoading] = useContext(TipsContext);
-    const [projectData, setProjectData] = useState(null)
+    const [projectData, setProjectData] = useState([])
 
 
 useEffect(() => {
@@ -33,7 +33,7 @@ useEffect(() => {
         <motion.div variants={pageAnimation} initial='hidden' animate='show' exit='exit'>
             <PageContent title='Coding Tips'>
                 <TipsWrapper className='tips-wrapper'>
-                    {projectData && 
+                    { 
                     //console.log(projectData)
                     projectData.map(tip => (
                         <h2 key={tip.title}>{tip.title}</h2>

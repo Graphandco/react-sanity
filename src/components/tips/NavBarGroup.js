@@ -10,13 +10,14 @@ import { SiPrestashop } from 'react-icons/si';
 import { FaChevronDown } from 'react-icons/fa';
 import { FaChevronUp } from 'react-icons/fa';
 
-const NavBarGroup = ({tipCategory, tips}) => {
+const NavBarGroup = ({tipCategory, tips, setCurrentSlug}) => {
 
  const [navOpen, setNavOpen] = useState(false);
 
  const handleNavOpen = () => {
      setNavOpen(!navOpen);
  }
+
 
     return (
         <IconContext.Provider value={{ style: {fontSize: '1.2rem'}}}>
@@ -33,8 +34,8 @@ const NavBarGroup = ({tipCategory, tips}) => {
                     </NavBarGroupTitle>
                     {navOpen && 
                     <NavBarItems>
-                        {tips.filter(tip => tip.category === tipCategory).map(filteredTip =>(
-                        <NavBarItem key={filteredTip.slug} tip={filteredTip} />
+                        {tips.filter(tip => tip.language === tipCategory).map(filteredTip =>(
+                        <NavBarItem key={filteredTip.slug.current} tip={filteredTip} setCurrentSlug={setCurrentSlug} />
                         ))}
                     </NavBarItems>
                     }

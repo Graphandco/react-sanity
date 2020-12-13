@@ -52,7 +52,7 @@ const Realisations = () => {
                             </div>
                         </div>
                         {realisations.map((realisation, index) => (
-                            console.log(realisation),
+                            
                             <div className='realisation' key={index}>
                                 <div className='image'>
                                     <img

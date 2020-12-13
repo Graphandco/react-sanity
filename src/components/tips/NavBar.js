@@ -6,25 +6,25 @@ import NavBarGroup from './NavBarGroup';
 
 
 //Context
-import { TipsContext } from '../contexts/TipsContext';
+//import { TipsContext } from '../contexts/TipsContext';
 
 
-const NavBar = () => {
+const NavBar = ( {tips, setCurrentSlug} ) => {
 
 const [navOpen, setNavOpen] = useState(false)
-const [tips, isLoading] = useContext(TipsContext);
+//const [tips, isLoading] = useContext(TipsContext);
 
 
 const tipsCategories = [];
 tips.map(tip => {
-    if (tipsCategories.indexOf(tip.category) === -1) {
-        tipsCategories.push(tip.category)
+    if (tipsCategories.indexOf(tip.language) === -1) {
+        tipsCategories.push(tip.language)
     }
 });
     return (
         <NavBarWrapper className='navbar'>
             {tipsCategories.map((tipCategory) => (
-                <NavBarGroup tipCategory={tipCategory} tips={tips} key={tipCategory} />
+                <NavBarGroup tipCategory={tipCategory} tips={tips} key={tipCategory} setCurrentSlug={setCurrentSlug} />
             ))}
         </NavBarWrapper>
     )

@@ -5,19 +5,30 @@ export default {
     fields: [
         {
             name: 'title',
+            title: 'Title',
             type: 'string',
         },
         {
-            name: 'description',
-            type: 'text',
+            name: 'slug',
+            title: 'Slug',
+            type: 'slug',
+            options: {
+                source: 'title',
+                maxLength: 200, // will be ignored if slugify is set
+                slugify: input => input
+                                     .toLowerCase()
+                                     .replace(/\s+/g, '-')
+                                     .slice(0, 200)
+              }
         },
         {
-            name: 'code',
+            name: 'description',
+            title: 'Description',
             type: 'text',
         },
         {
             name: "language",
-            title: 'Langage',
+            title: 'Language',
             type: 'string',
             options: {
                 list: [
@@ -25,6 +36,30 @@ export default {
                     { value: 'javascript', title: 'Javascript' },
                 ]
             }
-        }
+        },
+        {
+  type: 'array',
+  name: 'list',
+  of: [
+
+    {
+      title: 'Codes',
+      type: 'object',
+      name:'codes',
+      fields: [
+        {
+          title: 'Text',
+          name: 'text',
+          type: 'string'
+        } ,
+        {
+          title: 'Code',
+          name: 'code',
+          type: 'text'
+        } 
+      ]
+    }
+  ]
+}
     ]
   }

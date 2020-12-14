@@ -5,12 +5,13 @@ import styled from 'styled-components';
 import { IconContext } from 'react-icons/lib';
 import { FaCss3Alt } from 'react-icons/fa';
 import { IoLogoJavascript } from 'react-icons/io';
+import { SiPhp } from 'react-icons/si';
 import { FaReact } from 'react-icons/fa';
 import { SiPrestashop } from 'react-icons/si';
 import { FaChevronDown } from 'react-icons/fa';
 import { FaChevronUp } from 'react-icons/fa';
 
-const NavBarGroup = ({tipCategory, tips, setCurrentSlug}) => {
+const NavBarGroup = ({tipCategory, tips, currentSlug, setCurrentSlug}) => {
 
  const [navOpen, setNavOpen] = useState(false);
 
@@ -25,6 +26,7 @@ const NavBarGroup = ({tipCategory, tips, setCurrentSlug}) => {
                     <NavBarGroupTitle className='navbar-group-title' onClick={handleNavOpen} navOpen={navOpen}>
                         <NavBarGroupName className='navbar-group-name'>
                             {tipCategory === 'javascript' && <IoLogoJavascript /> }
+                            {tipCategory === 'php' && <SiPhp /> }
                             {tipCategory === 'prestashop' && <SiPrestashop /> }
                             {tipCategory === 'css' && <FaCss3Alt /> }
                             {tipCategory === 'react' && <FaReact /> }
@@ -35,7 +37,7 @@ const NavBarGroup = ({tipCategory, tips, setCurrentSlug}) => {
                     {navOpen && 
                     <NavBarItems>
                         {tips.filter(tip => tip.language === tipCategory).map(filteredTip =>(
-                        <NavBarItem key={filteredTip.slug.current} tip={filteredTip} setCurrentSlug={setCurrentSlug} />
+                        <NavBarItem key={filteredTip.slug.current} tip={filteredTip} currentSlug={currentSlug} setCurrentSlug={setCurrentSlug} />
                         ))}
                     </NavBarItems>
                     }

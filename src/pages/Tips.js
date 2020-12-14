@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import sanityClient from '../client.js'
 //Components
 import PageContent from '../components/PageContent';
+import TipContent from '../components/tips/TipContent';
 import NavBar from '../components/tips/NavBar';
 import {pageAnimation} from '../components/animation';
 //import TipCard from '../components/tips/TipCard';
@@ -18,6 +19,27 @@ const Tips = () => {
     const [tips, setTips] = useState([])
     const [currentSlug, setCurrentSlug] = useState('display-grid')
 
+    const dynamicSort = (property) => {
+        let sortOrder = 1;
+        if (property[0] === '-') {
+            sortOrder = -1;
+            property = property.substr(1);
+        }
+        return function (a, b) {
+            /* next line works with strings and numbers,
+             * and you may want to customize it to your needs
+             */
+            let result =
+                a[property] < b[property]
+                    ? -1
+                    : a[property] > b[property]
+                    ? 1
+                    : 0;
+            return result * sortOrder;
+        };
+    };
+
+    tips.sort(dynamicSort('title'));
 
 useEffect(() => {
     sanityClient.fetch(`*[_type == 'tip']{
@@ -25,6 +47,7 @@ useEffect(() => {
         slug,
         description,
         language,
+        syntax,
         list,
     }`)
     .then((data) => setTips(data))
@@ -35,18 +58,13 @@ useEffect(() => {
         <motion.div variants={pageAnimation} initial='hidden' animate='show' exit='exit'>
             <PageContent title='Coding Tips'>
                 <TipsWrapper className='tips-wrapper'>
-                    <NavBar tips={tips} setCurrentSlug={setCurrentSlug} />
-                    {/* {isLoading
-                        ? 'Loading...'
-                        : tips.map(tip => <TipCard key={tip.id} tip={tip} />)} */}
+                    <NavBar tips={tips} currentSlug={currentSlug} setCurrentSlug={setCurrentSlug} fliter={dynamicSort} />
                     <TipWrapper className='tip-wrapper'>
                     { 
-                    //console.log(tips),
+                    console.log(tips),
                     tips.filter(filteredTip => filteredTip.slug.current.includes(currentSlug)).map(tip => (
-                        <TipContent className="tip-content" key={tip.title}>
-                            <Title>{tip.title}</Title>
-                            <Description>{tip.description}</Description>
-                        </TipContent>
+                        <TipContent key={tip.title} tip={tip} />
+
                     ))
                 }
                     </TipWrapper>
@@ -67,17 +85,7 @@ const TipWrapper = styled.div`
     background-color: #171821;
 `;
 
-const TipContent = styled.div`
-    padding: 1rem 2rem;
-`;
     
-const Title = styled.h2`
-    color: var(--orange);
-`;
-    
-const Description = styled.p`
-    color: var(--white);
-    opacity: .8;
-`;
+
 
 export default Tips;

@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 
 
-const NavBarItem = ({tip, setCurrentSlug}) => {
+const NavBarItem = ({tip,currentSlug, setCurrentSlug}) => {
 
     const [tipActive, setTipActive] = useState(false)
 
@@ -11,8 +11,16 @@ const NavBarItem = ({tip, setCurrentSlug}) => {
         setTipActive(!tipActive)
     }
 
+    useEffect(() => {
+        if (tip.slug !== currentSlug) {
+            setTipActive(false)
+        } else {
+            setTipActive(true)
+        }
+    }, [tipActive])
+
     return (
-        <TipItem  onClick={handleTip} active={tipActive}>
+        <TipItem onClick={handleTip} active={tipActive} className={`${tipActive ? 'tip-item tip-active' : 'tip-item'}`}>
             <span>{tip.title}</span>
         </TipItem>
     )

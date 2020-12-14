@@ -34,32 +34,58 @@ export default {
                 list: [
                     { value: 'css', title: 'CSS' },
                     { value: 'javascript', title: 'Javascript' },
+                    { value: 'php', title: 'PHP' },
+                    { value: 'react', title: 'React' },
+                    { value: 'prestashop', title: 'Prestashop' },
                 ]
             }
         },
         {
-  type: 'array',
-  name: 'list',
-  of: [
-
-    {
-      title: 'Codes',
-      type: 'object',
-      name:'codes',
-      fields: [
+            name: "syntax",
+            title: 'Syntax',
+            type: 'string',
+            options: {
+                list: [
+                    { value: 'css', title: 'CSS' },
+                    { value: 'javascript', title: 'Javascript' },
+                    { value: 'php', title: 'PHP' },
+                ]
+            }
+        },
         {
-          title: 'Text',
-          name: 'text',
-          type: 'string'
-        } ,
-        {
-          title: 'Code',
-          name: 'code',
-          type: 'text'
-        } 
-      ]
-    }
-  ]
+        type: 'array',
+        name: 'list',
+        of: [
+                {
+                    title: 'Codes',
+                    type: 'object',
+                    name:'codes',
+                    fields: [
+                        {
+                        title: 'Text',
+                        name: 'text',
+                        type: 'string'
+                        } ,
+                        {
+                        title: 'Code',
+                        name: 'code',
+                        type: 'text'
+                        } 
+                    ]
+                }
+            ]
+        }
+    ],
+    preview: {
+        select: {
+          title: 'title',
+          language: 'language',
+        },
+        prepare(selection) {
+          const {language} = selection
+          return Object.assign({}, selection, {
+            subtitle: language && `${language}`,
+          })
+        },
+      },
 }
-    ]
-  }

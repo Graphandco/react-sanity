@@ -9,7 +9,7 @@ import NavBarGroup from './NavBarGroup';
 //import { TipsContext } from '../contexts/TipsContext';
 
 
-const NavBar = ( {tips, setCurrentSlug} ) => {
+const NavBar = ( {tips, currentSlug, setCurrentSlug} ) => {
 
 const [navOpen, setNavOpen] = useState(false)
 //const [tips, isLoading] = useContext(TipsContext);
@@ -24,7 +24,7 @@ tips.map(tip => {
     return (
         <NavBarWrapper className='navbar'>
             {tipsCategories.map((tipCategory) => (
-                <NavBarGroup tipCategory={tipCategory} tips={tips} key={tipCategory} setCurrentSlug={setCurrentSlug} />
+                <NavBarGroup tipCategory={tipCategory} tips={tips} key={tipCategory} currentSlug={currentSlug} setCurrentSlug={setCurrentSlug} />
             ))}
         </NavBarWrapper>
     )
